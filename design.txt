@@ -1,0 +1,23 @@
+
+What's needed:
+- Ship
+- Momentum
+- Lives
+- Shooting
+- Asteroids
+
+Stretch goals
+- Main menu
+- Enemy Spaceship
+- Speed limiting
+- Single entity multiply visible
+- Sound
+
+Super stretch goals
+- Physicsteroids (asteroids bounce off each other)
+- Boxsteroids (edges are walls that expand as you destroy asteroids)
+- Asteroid mining (beam weapon carving off voxel chunks)
+- Wasteroids (Infinite lives, but you have to impact an asteroid with sufficient force to fracture it)
+- Gravity Asteroids (All the entities exhibit gravity, with a special graviton missile that draws people in)
+- Fasteroids (The higher your score, the faster time goes)
+- Masteroids (You cannot see the asteroids. You are stationary. You can periodically ping to see the asteroids for a short while.)
