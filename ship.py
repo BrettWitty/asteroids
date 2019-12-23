@@ -12,6 +12,7 @@ class Ship(physics.PhysicsObject):
         self.lives = 3
         
         self.firing = False
+        self.firing_cooldown = 0
         self.thrusting = False
 
         self.image = pygame.Surface([32,32], flags=pygame.SRCALPHA)
@@ -51,6 +52,12 @@ class Ship(physics.PhysicsObject):
     def update(self, tick):
 
         super().update(tick)
+
+        self.firing_cooldown -= tick
+
+        if self.firing and self.firing_cooldown <= 0 :
+            self.firing_cooldown = constants.FIRE_COOLDOWN
+            pygame.event.post(pygame.event.Event(constants.FIRE_EVENT))
 
         if self.thrusting:
             rotated_img = pygame.transform.rotate( self.base_image_thrust, self.angle)

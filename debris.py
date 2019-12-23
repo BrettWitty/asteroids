@@ -1,10 +1,11 @@
 import physics
 import pygame
 import numpy as np
+import constants
 
 class Debris(physics.PhysicsObject):
 
-    PIXEL_SIZE = [32, 48, 64,128]
+    PIXEL_SIZE = [32, 48, 64, 128]
 
     def __init__(self, size, x=0.0, y=0.0, vx=0.0, vy=0.0, angle=90.0, omega=0.0):
 
