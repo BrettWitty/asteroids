@@ -34,7 +34,7 @@ def main():
         vy = (2*rng.random() -1) * 0.01
         omega = (2*rng.random() -1) * 0.1
         objects.add( Debris(size=size, x=x, y=y, vx=vx, vy=vy, omega=omega))
-
+    
     print("Running...")
 
     space = pygame.Surface((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
