@@ -15,10 +15,11 @@ FIRE_LIFETIME = 1000
 FIRE_SPEED = 30
 
 # Events
-SHIP_SPAWN_EVENT = pygame.USEREVENT + 1
-FIRE_EVENT = pygame.USEREVENT + 2
-FIRE_DIE_EVENT = pygame.USEREVENT + 3
-EXPLODE_DEBRIS = pygame.USEREVENT + 4
+SHIP_SPAWN_EVENT = pygame.event.custom_type()
+FIRE_EVENT = pygame.event.custom_type()
+FIRE_DIE_EVENT = pygame.event.custom_type()
+EXPLODE_DEBRIS = pygame.event.custom_type()
+
 
 
 # Audio
