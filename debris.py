@@ -23,6 +23,9 @@ class Debris(physics.PhysicsObject):
         self.base_image = pygame.Surface([px,px], flags=pygame.SRCALPHA)
         self.init_base_image(px)
 
+        self.explosion_sound = pygame.mixer.Sound("sounds/explosion.wav")
+        self.explosion_channel = pygame.mixer.Channel(constants.EXPLOSION_CHANNEL)
+
     def init_base_image(self, px):
 
         # Pick 3 vertices of a 16-gon. Pull them into the center

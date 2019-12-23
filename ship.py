@@ -1,6 +1,7 @@
 import pygame
 
 import physics
+import constants
 
 class Ship(physics.PhysicsObject):
 
@@ -20,6 +21,10 @@ class Ship(physics.PhysicsObject):
         self.base_image = pygame.Surface([32,32], flags=pygame.SRCALPHA)
         self.base_image_thrust = pygame.Surface([32,32], flags=pygame.SRCALPHA)
         self.init_base_image()
+
+        self.thrust_sound = pygame.mixer.Sound("sounds/thrust.wav")
+
+        self.thrust_channel = pygame.mixer.Channel(constants.THRUST_CHANNEL)
 
     def init_base_image(self):
 
@@ -49,8 +54,12 @@ class Ship(physics.PhysicsObject):
 
         if self.thrusting:
             rotated_img = pygame.transform.rotate( self.base_image_thrust, self.angle)
+            if not self.thrust_channel.get_busy():
+                self.thrust_channel.play(self.thrust_sound, loops=-1)
         else:
             rotated_img = pygame.transform.rotate( self.base_image, self.angle)
+            if self.thrust_channel.get_busy():
+                self.thrust_channel.fadeout(constants.FADE_OUT_TIME)
         rotated_rect = self.rect.copy()
         rotated_rect.center = rotated_img.get_rect().center
         rotated_img = rotated_img.subsurface(rotated_rect).copy()
