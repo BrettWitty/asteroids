@@ -1,5 +1,5 @@
-from asteroid import Asteroid
+from debris import Debris
 from ship import Ship
 
 
-__all__ = ['Asteroid', 'Ship']
+__all__ = ['Debris', 'Ship']

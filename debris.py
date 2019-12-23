@@ -2,7 +2,7 @@ import physics
 import pygame
 import numpy as np
 
-class Asteroid(physics.PhysicsObject):
+class Debris(physics.PhysicsObject):
 
     PIXEL_SIZE = [32, 48, 64,128]
 
