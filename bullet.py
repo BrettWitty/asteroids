@@ -22,8 +22,7 @@ class Bullet(physics.PhysicsObject):
         self.rect = pygame.Rect(x,y,5,5)
         self.visible = 1
 
-        pygame.draw.circle(self.image, pygame.Color("#00ff7fff"), self.image.get_rect().center, 2)
-        
+        self.base_color = pygame.Color("#adff2fff")
         self.life = constants.FIRE_LIFETIME
 
     def update(self, tick):
@@ -35,5 +34,11 @@ class Bullet(physics.PhysicsObject):
         if self.life < 0.0:
             die_event = pygame.event.Event(constants.FIRE_DIE_EVENT, { 'bullet' : self })
             pygame.event.post(die_event)
+
+        else:
+
+            t = 1.0- (self.life/constants.FIRE_LIFETIME)**2
+            col = self.base_color.lerp(pygame.Color("#ff4500aa"), t )
+            pygame.draw.circle(self.image, col, self.image.get_rect().center, 2)
 
         self.dirty = 1
