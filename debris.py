@@ -21,7 +21,7 @@ class Debris(physics.PhysicsObject):
         self.rect = pygame.Rect(x,y,px,px)
         self.visible = 1
 
-        self.base_image = pygame.Surface([px,px], flags=pygame.SRCALPHA)
+        self.base_images = [ pygame.Surface([px,px], flags=pygame.SRCALPHA) for i in range(360) ]
         self.init_base_image(px)
 
         self.explosion_sound = pygame.mixer.Sound("sounds/explosion.wav")
@@ -34,8 +34,7 @@ class Debris(physics.PhysicsObject):
         NUM_PIECES = 15
         rng = np.random.default_rng()
         dents = rng.permutation( [True] * NUM_DENTS + [False] * (NUM_PIECES - NUM_DENTS +1) )
-
-        pts = []
+        dent_radius = [ ]
 
         for i, d in enumerate(dents):
 
@@ -44,14 +43,24 @@ class Debris(physics.PhysicsObject):
             else:
                 r = 1.0
 
-            theta = 2*np.pi * i/NUM_PIECES
-            x = int(r*np.cos(theta)*(px//2)) + (px//2)
-            y = int(r*np.sin(theta)*(px//2)) + (px//2)
+            dent_radius.append(r)
 
-            pts.append( (x,y) )
+        offset = np.pi / 180
 
-        pygame.draw.aalines(self.base_image, pygame.Color("#bc8f8fff"), True, pts)
-        pygame.draw.aalines(self.base_image, pygame.Color("#bc8f8fff"), True, pts)
+        for n in range(360):
+
+            pts = []
+
+            for i, r in enumerate(dent_radius):
+
+                theta = 2*np.pi * i/NUM_PIECES
+                x = int(r*np.cos(theta + n*offset)*(px//2)) + (px//2)
+                y = int(r*np.sin(theta + n*offset)*(px//2)) + (px//2)
+
+                pts.append( (x,y) )
+
+            pygame.draw.aalines(self.base_images[n], pygame.Color("#bc8f8fff"), True, pts)
+            pygame.draw.aalines(self.base_images[n], pygame.Color("#bc8f8fff"), True, pts)
 
     def update(self, tick):
 
@@ -59,9 +68,6 @@ class Debris(physics.PhysicsObject):
 
         self.angle += self.omega * tick
 
-        rotated_img = pygame.transform.rotate( self.base_image, self.angle)
-        rotated_rect = self.rect.copy()
-        rotated_rect.center = rotated_img.get_rect().center
-        rotated_img = rotated_img.subsurface(rotated_rect).copy()
-        self.image = rotated_img
+        self.image = self.base_images[ int(np.round(self.angle)) % 360 ]
+
         self.dirty = 1
