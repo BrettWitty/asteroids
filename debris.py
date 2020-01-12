@@ -11,6 +11,8 @@ class Debris(physics.PhysicsObject):
 
         super().__init__(x=x, y=y, vx=vx, vy=vy, angle=angle)
 
+        self.name = "Debris"
+
         self.omega = omega
 
         self.size = size
@@ -20,14 +22,24 @@ class Debris(physics.PhysicsObject):
         self.image = pygame.Surface([px,px], flags=pygame.SRCALPHA)
         self.rect = pygame.Rect(x,y,px,px)
         self.visible = 1
-
+        
         self.base_images = [ pygame.Surface([px,px], flags=pygame.SRCALPHA) for i in range(360) ]
+        self.mask = None
+        self.collision_masks = [ None for i in range(360) ]
+        
         self.init_base_image(px)
 
         self.explosion_sound = pygame.mixer.Sound("sounds/explosion.wav")
         self.explosion_channel = pygame.mixer.Channel(constants.EXPLOSION_CHANNEL)
 
+    def kill(self):
+
+        if not self.explosion_channel.get_busy():
+            self.explosion_channel.play(self.explosion_sound, loops=0)
+
     def init_base_image(self, px):
+
+        # Creates the initial images and the collision masks
 
         # Pick 3 vertices of a 16-gon. Pull them into the center
         NUM_DENTS = 4
@@ -59,8 +71,10 @@ class Debris(physics.PhysicsObject):
 
                 pts.append( (x,y) )
 
-            pygame.draw.aalines(self.base_images[n], pygame.Color("#bc8f8fff"), True, pts)
-            pygame.draw.aalines(self.base_images[n], pygame.Color("#bc8f8fff"), True, pts)
+            #pygame.draw.aalines(self.base_images[n], pygame.Color("#bc8f8fff"), True, pts)
+            #pygame.draw.aalines(self.base_images[n], pygame.Color("#bc8f8fff"), True, pts)
+            pygame.draw.polygon(self.base_images[n], pygame.Color("#d2b48cff"), pts, 0)
+            self.collision_masks[n] = pygame.mask.from_surface(self.base_images[n])
 
     def update(self, tick):
 
@@ -68,6 +82,8 @@ class Debris(physics.PhysicsObject):
 
         self.angle += self.omega * tick
 
-        self.image = self.base_images[ int(np.round(self.angle)) % 360 ]
+        idx = int(np.round(self.angle)) % 360
+        self.image = self.base_images[ idx ]
+        self.mask = self.collision_masks[idx]
 
         self.dirty = 1

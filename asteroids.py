@@ -13,6 +13,9 @@ def spawn_bullet(ship, rng, objects):
 
 def spawn_asteroid(ship, rng, objects, *, pos=None, size=None, num=1):
 
+    if size != None and size < 0:
+        return
+
     if not pos:
 
         # Get a random position in the space (away from the ship)
@@ -23,9 +26,11 @@ def spawn_asteroid(ship, rng, objects, *, pos=None, size=None, num=1):
 
         cx += r*np.cos(theta)
         cy += r*np.sin(theta)
+        max_vel = 0.01
 
     else:
         cx,cy = pos
+        max_vel = 0.5
 
     for i in range(num):
 
@@ -36,15 +41,15 @@ def spawn_asteroid(ship, rng, objects, *, pos=None, size=None, num=1):
         theta = 2*constants.PI * rng.random()
         x = r*np.cos(theta) + cx
         y = r*np.sin(theta) + cy
-        vx = (2*rng.random() -1) * 0.01
-        vy = (2*rng.random() -1) * 0.01
+        vx = (2*rng.random() -1) * max_vel
+        vy = (2*rng.random() -1) * max_vel
         omega = (2*rng.random() -1) * 0.1
         objects.add( Debris(size=size, x=x, y=y, vx=vx, vy=vy, omega=omega))
-            
 
 def main():
 
     pygame.init()
+    pygame.mixer.init()
 
     pygame.display.set_caption('BWasteroids')
     screen = pygame.display.set_mode((constants.SCREEN_WIDTH,constants.SCREEN_HEIGHT), flags=pygame.SCALED)
@@ -126,6 +131,20 @@ def main():
 
         # Simulate()
         objects.update(tick)
+
+        # Check for collisions
+        collisions = pygame.sprite.groupcollide(objects, objects, False, False)
+
+        for c1 in collisions:
+            for c2 in collisions[c1]:
+                if c1 in objects and c2 in objects:
+                    if c1 != c2:
+                        if isinstance(c1, Bullet) and isinstance(c2, Debris):
+                            objects.remove(c2)
+                            spawn_asteroid(ship, rng, objects, pos=(c2.x, c2.y), size=(c2.size-1), num=rng.integers(1,4))
+                            c2.kill()
+                            del c2
+                            objects.remove(c1)
         
         # render()
         rects = objects.draw(screen)

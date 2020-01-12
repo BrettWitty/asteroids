@@ -9,11 +9,15 @@ class PhysicsObject(pygame.sprite.DirtySprite):
 
         pygame.sprite.DirtySprite.__init__(self)
 
+        self.name = 'N/A'
+
         self.x = x
         self.y = y
         self.vx = vx
         self.vy = vy
         self.angle = angle
+
+        self.mask = None
 
     def update(self, tick):
 

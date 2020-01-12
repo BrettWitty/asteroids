@@ -9,6 +9,8 @@ class Ship(physics.PhysicsObject):
 
         super().__init__(x=x, y=y, vx=vx, vy=vy, angle=angle)
 
+        self.name = 'Ship'
+
         self.lives = 3
         
         self.firing = False

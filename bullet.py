@@ -7,6 +7,8 @@ class Bullet(physics.PhysicsObject):
 
     def __init__(self, ship):
 
+        self.name = 'Bullet'
+
         d = constants.BULLET_SPAWN_RADIUS
         x = ship.x + d*np.cos(constants.DEG_TO_RAD*ship.angle)
         y = ship.y + d*np.sin(constants.DEG_TO_RAD*ship.angle)
@@ -21,6 +23,10 @@ class Bullet(physics.PhysicsObject):
         self.image = pygame.Surface([5,5], flags=pygame.SRCALPHA)
         self.rect = pygame.Rect(x,y,5,5)
         self.visible = 1
+
+        col_surface = self.image.copy()
+        pygame.draw.circle(col_surface, pygame.Color("white"), col_surface.get_rect().center, 2, 0)
+        self.mask = pygame.mask.from_surface(col_surface)
 
         self.base_color = pygame.Color("#adff2fff")
         self.life = constants.FIRE_LIFETIME
