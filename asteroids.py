@@ -133,7 +133,7 @@ def main():
         objects.update(tick)
 
         # Check for collisions
-        collisions = pygame.sprite.groupcollide(objects, objects, False, False)
+        collisions = pygame.sprite.groupcollide(objects, objects, False, False, pygame.sprite.collide_mask)
 
         for c1 in collisions:
             for c2 in collisions[c1]:

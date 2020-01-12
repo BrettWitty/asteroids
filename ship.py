@@ -23,6 +23,7 @@ class Ship(physics.PhysicsObject):
 
         self.base_image = pygame.Surface([32,32], flags=pygame.SRCALPHA)
         self.base_image_thrust = pygame.Surface([32,32], flags=pygame.SRCALPHA)
+        self.mask = pygame.Mask([32,32])
         self.init_base_image()
 
         self.thrust_sound = pygame.mixer.Sound("sounds/thrust.wav")
