@@ -33,7 +33,7 @@ class Debris(physics.PhysicsObject):
         NUM_DENTS = 4
         NUM_PIECES = 15
         rng = np.random.default_rng()
-        dents = rng.permutation( [True] * NUM_DENTS + [False] * (NUM_PIECES - NUM_DENTS) )
+        dents = rng.permutation( [True] * NUM_DENTS + [False] * (NUM_PIECES - NUM_DENTS +1) )
 
         pts = []
 
