@@ -24,12 +24,17 @@ class Ship(physics.PhysicsObject):
 
         self.base_images = [pygame.Surface([32,32], flags=pygame.SRCALPHA) for i in range(360) ]
         self.base_images_thrust = [pygame.Surface([32,32], flags=pygame.SRCALPHA) for i in range(360) ]
-        self.mask = pygame.Mask([32,32])
+        
         self.init_base_image()
 
-        self.thrust_sound = pygame.mixer.Sound("sounds/thrust.wav")
+        self.mask = pygame.Mask([32,32])
+        self.masks = [ pygame.mask.from_surface(surf) for surf in self.base_images ]
 
+        self.thrust_sound = pygame.mixer.Sound("sounds/thrust.wav")
         self.thrust_channel = pygame.mixer.Channel(constants.THRUST_CHANNEL)
+
+        self.explode_sound = pygame.mixer.Sound("sounds/ship-explode.wav")
+        self.explode_channel = pygame.mixer.Channel(constants.SHIP_EXPLODE_CHANNEL)
 
     def init_base_image(self):
 
@@ -93,6 +98,7 @@ class Ship(physics.PhysicsObject):
 
     def die(self):
 
+        self.explode_channel.play(self.explode_sound)
         self.lives -= 1
         self.thrusting = False
         self.firing = False
