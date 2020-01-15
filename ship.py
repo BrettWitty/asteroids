@@ -103,6 +103,9 @@ class Ship(physics.PhysicsObject):
         self.thrusting = False
         self.firing = False
 
+        if self.lives < 1:
+            pygame.event.post(pygame.event.Event(constants.GAME_OVER))
+
     @property
     def dead(self):
 

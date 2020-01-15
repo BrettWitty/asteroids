@@ -19,6 +19,7 @@ SHIP_SPAWN_EVENT = pygame.event.custom_type()
 FIRE_EVENT = pygame.event.custom_type()
 FIRE_DIE_EVENT = pygame.event.custom_type()
 EXPLODE_DEBRIS = pygame.event.custom_type()
+GAME_OVER = pygame.event.custom_type()
 
 
 

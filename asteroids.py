@@ -121,6 +121,9 @@ def main():
             if event.type == constants.FIRE_DIE_EVENT:
                 objects.remove( event.bullet )
 
+            if event.type == constants.GAME_OVER:
+                running = False
+
         keys = pygame.key.get_pressed()
         if not ship.dead:
             if keys[pygame.K_LEFT] or keys[pygame.K_a]:
