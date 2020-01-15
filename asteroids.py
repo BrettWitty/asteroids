@@ -108,10 +108,12 @@ def main():
             if event.type == pygame.KEYUP:
 
                 if event.key in (pygame.K_UP, pygame.K_w):
-                    ship.thrusting = False
+                    if not ship.dead:
+                        ship.thrusting = False
 
                 if event.key == pygame.K_SPACE:
-                    ship.firing = False
+                    if not ship.dead:
+                        ship.firing = False
 
             if event.type == constants.FIRE_EVENT:
                 spawn_bullet(ship, rng, objects)
@@ -120,14 +122,15 @@ def main():
                 objects.remove( event.bullet )
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-            ship.rotate( tick )
+        if not ship.dead:
+            if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                ship.rotate( tick )
 
-        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-            ship.rotate( -tick )
+            if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                ship.rotate( -tick )
 
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
-            ship.thrust(tick)
+            if keys[pygame.K_UP] or keys[pygame.K_w]:
+                ship.thrust(tick)
 
         # Simulate()
         objects.update(tick)
@@ -145,6 +148,10 @@ def main():
                             c2.kill()
                             del c2
                             objects.remove(c1)
+                        if isinstance(c1, Ship) and isinstance(c2, Debris):
+
+                            if not c1.dead:
+                                c1.die()
         
         # render()
         rects = objects.draw(screen)

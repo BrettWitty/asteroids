@@ -81,6 +81,8 @@ class Ship(physics.PhysicsObject):
             self.image = self.base_images[idx]
             if self.thrust_channel.get_busy():
                 self.thrust_channel.fadeout(constants.FADE_OUT_TIME)
+
+        self.mask = self.masks[idx]
         self.dirty = 1
 
     def thrust(self, tick):
@@ -88,3 +90,14 @@ class Ship(physics.PhysicsObject):
         super().thrust(tick)
 
         self.thrusting = True
+
+    def die(self):
+
+        self.lives -= 1
+        self.thrusting = False
+        self.firing = False
+
+    @property
+    def dead(self):
+
+        return self.explode_channel.get_busy()
