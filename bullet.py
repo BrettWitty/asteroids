@@ -12,8 +12,7 @@ class Bullet(physics.PhysicsObject):
         d = constants.BULLET_SPAWN_RADIUS
         x = ship.x + d*np.cos(constants.DEG_TO_RAD*ship.angle)
         y = ship.y + d*np.sin(constants.DEG_TO_RAD*ship.angle)
-        #vx = 0.1*np.cos(ship.angle)
-        #vy = 0.1*np.sin(ship.angle)
+
         V = constants.FIRE_SPEED
         vx = ship.vx + V*d*np.cos(constants.DEG_TO_RAD*ship.angle)
         vy = ship.vy + V*d*np.sin(constants.DEG_TO_RAD*ship.angle)

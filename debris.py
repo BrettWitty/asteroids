@@ -71,8 +71,6 @@ class Debris(physics.PhysicsObject):
 
                 pts.append( (x,y) )
 
-            #pygame.draw.aalines(self.base_images[n], pygame.Color("#bc8f8fff"), True, pts)
-            #pygame.draw.aalines(self.base_images[n], pygame.Color("#bc8f8fff"), True, pts)
             pygame.draw.polygon(self.base_images[n], pygame.Color("#d2b48cff"), pts, 0)
             self.collision_masks[n] = pygame.mask.from_surface(self.base_images[n])
 
