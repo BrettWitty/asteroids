@@ -13,6 +13,7 @@ class Ship(physics.PhysicsObject):
         self.name = 'Ship'
 
         self.lives = 3
+        self.score = 0
         
         self.firing = False
         self.firing_cooldown = 0

@@ -21,8 +21,6 @@ FIRE_DIE_EVENT = pygame.event.custom_type()
 EXPLODE_DEBRIS = pygame.event.custom_type()
 GAME_OVER = pygame.event.custom_type()
 
-
-
 # Audio
 FADE_OUT_TIME = 200
 UI_CHANNEL = 0

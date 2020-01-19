@@ -1,3 +1,4 @@
 from livesui import LivesUI
+from scoreui import ScoreUI
 
-__all__ = ['LivesUI']
+__all__ = ['LivesUI', 'ScoreUI']

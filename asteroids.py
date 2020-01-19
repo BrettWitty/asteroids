@@ -68,7 +68,10 @@ def main():
 
     # Create UI
     lives_ui = LivesUI(ship, x=10, y=10)
+    score_ui = ScoreUI(ship, x=10, y=10)
     objects.add(lives_ui)
+    objects.add(score_ui)
+
     rng = np.random.default_rng()
 
     spawn_asteroid(ship, rng, objects, num = 4)
@@ -153,6 +156,10 @@ def main():
                             c2.kill()
                             del c2
                             objects.remove(c1)
+
+                            # Add some scores
+                            ship.score += 100
+                            
                         if isinstance(c1, Ship) and isinstance(c2, Debris):
 
                             if not c1.dead:
