@@ -10,10 +10,10 @@ These instructions will get the code onto your machine and hopefully running.
 
 ### Prerequisites
 
-We will need Python 3.6 and pygame 2.0.
+We will need Python 3.6, pygame 2.0 and numpy.
 
 ```bash
-pip install --user pygame==2.0.0.dev6
+pip install --user -r requirements.txt
 ```
 
 ### Installing and running
