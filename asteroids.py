@@ -2,6 +2,7 @@ import pygame
 import numpy as np
 
 from entities import *
+from ui import *
 import constants
 
 def spawn_bullet(ship, rng, objects):
@@ -63,10 +64,11 @@ def main():
     ship = Ship(0.0,0.0, 0.0,0.0, 90.0)
 
     objects = pygame.sprite.LayeredDirty(_use_update=True)
-    #objects = pygame.sprite.LayeredDirty()
-
     objects.add(ship)
 
+    # Create UI
+    lives_ui = LivesUI(ship, x=10, y=10)
+    objects.add(lives_ui)
     rng = np.random.default_rng()
 
     spawn_asteroid(ship, rng, objects, num = 4)
